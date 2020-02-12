@@ -11,6 +11,7 @@
 #include <avr/interrupt.h>
 #define LCD_E 	3
 #define LCD_RS	2
+
 static void lcd_strobe_lcd_e(void)
 
 {
