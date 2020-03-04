@@ -7,16 +7,28 @@ void wait(int ms);
 
 int main(void)
 {
-    DDRF = 0x00;
+	DDRD = 0b01111111;
+	PORTC = 0xFF;
+	
+	DDRF = 0x00;
 	DDRA = 0xFF;
 	DDRB = 0xFF;
 	adcInit();
 	
-    while (1) 
-    {
-		PORTB = ADCL;
-		PORTA = ADCH;
-		wait(100);
+	while (1)
+	{
+		if (PINC & 0x80)
+		{
+			PORTB = ADCL;
+			PORTA = ADCH;
+			wait(100);
+		}
+		else
+		{
+			PORTB = 0x00;
+			PORTA = 0x00;
+			wait(100);
+		}
 	}
 	return 1;
 }
@@ -29,7 +41,7 @@ void wait(int ms)
 	}
 }
 
-void adcInit(void) 
+void adcInit(void)
 {
 	ADMUX = 0b01100001;
 	ADCSRA = 0b11100110;
